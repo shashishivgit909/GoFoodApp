@@ -85,9 +85,9 @@ export default function Signup() {
                 }),
             });
 
-            if (response.ok) {
+            if (response.status===201) {
                 // Successful response handling
-                console.log('User created successfully');
+                console.log('User signed up successfully');
                 // You can redirect or show a success message here
                 // For example, you can use history.push('/') to redirect to the homepage
             } else {
@@ -95,7 +95,7 @@ export default function Signup() {
                 console.log('Failed to create user');
             }
         } catch (error) {
-            console.log('Error in fetching', error);
+            console.log('server error', error);
         }
     };
 

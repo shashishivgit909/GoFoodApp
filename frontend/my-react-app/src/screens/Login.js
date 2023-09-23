@@ -1,6 +1,8 @@
 import React, { useState} from 'react';
-import { Link} from 'react-router-dom';
+import { Link,useNavigate} from 'react-router-dom';
+
 export default function Login() {
+  const navigate=useNavigate();
   const [credentials, setCredentials] = useState({
     email: '',
     password: ''
@@ -18,15 +20,17 @@ export default function Login() {
             password: credentials.password
           }),
         });
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
+        if (response.status!==200) {
+          console.log("invalid credentials")
         }
-        const responseData = await response.json();
-        //setData(responseData);
-        console.log(responseData);
+        else{ //for sucessful login+
+          const json= await response.json();
+          localStorage.setItem("authToken", json.authToken);
+         navigate("/"); 
+        }
       } catch (err) {
        // setError(err);
-       console.log("login fails");
+       console.log("server error");
       } 
     }
 

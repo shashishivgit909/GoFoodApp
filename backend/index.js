@@ -10,7 +10,7 @@ const dbConnect = require("./db.js");
 const app = express();
 
 // Use the dbConnect function
-app.use(express.urlencoded());
+//app.use(express.urlencoded());
 
 // app.use(bodyParser({
 //   urlencoded:true
