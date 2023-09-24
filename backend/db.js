@@ -10,9 +10,16 @@ const Connection = async () => {
     console.log('Database connected successfully');
 
     try {
-      const cursor = mongoose.connection.db.collection("food_items").find({});
-      const fetched_data = await cursor.toArray();
+      const cursor1 =  mongoose.connection.db.collection("food_items").find({});
+      const fetched_data1 = await cursor1.toArray();
+      global.food_items = fetched_data1; // way to decalre global variable in block 
+      //console.log(data); 
       //console.log("Fetched data:", fetched_data);
+      const cursor2 =  mongoose.connection.db.collection("foodCategories").find({});
+      const fetched_data2 = await cursor2.toArray();
+      global.foodCategories = fetched_data2;
+       // Close the database connection when you're done with it
+       mongoose.connection.close();
     } catch (error) {
       console.log("Error in fetching data:", error);
     }

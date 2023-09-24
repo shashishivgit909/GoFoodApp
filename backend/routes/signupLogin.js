@@ -43,7 +43,7 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt'); //Note: all opreation of bcrypt is asynchronous so we use await to handle them
 const jwt=require("jsonwebtoken"); //we apply json web token on sucessfull login
 const jwtsecret="mynameisshashikalwar"; //this is not known to user
-const router = express.Router();
+const router = express.Router(); // we can use app=express()
 
 // Add express.json() middleware to parse JSON data from the request body
 router.use(express.json());
@@ -76,7 +76,7 @@ router.post(
             res.status(201).json({ success: true, user }); // Respond with the created user
         } catch (error) {
             console.error(error);
-            res.status(500).json({ success: false, error: 'Server error' });
+            res.status(500)({ success: false, error: 'Server error' });
         }
     }
 );
