@@ -56,11 +56,7 @@ const Connection = async () => {
       console.log('Fetched data successfully',global.foodCategories);
     } catch (error) {
       console.log('Error in fetching data:', error);
-    } finally {
-      // Close the database connection when you're done with it
-      mongoose.connection.close();
-      console.log('Database connection closed');
-    }
+    } 
   } catch (error) {
     console.log('Error while connecting to the database:', error);
   }

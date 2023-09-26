@@ -82,37 +82,71 @@ router.post(
 );
 
 // Endpoint or API for login
+// router.post('/loginuser', async (req, res) => {
+//     try {
+//         // Validate email and password inputs (using express-validator)
+
+//         // Check if the user with the provided email exists in the database
+//         const userData = await User.findOne({ email: req.body.email });
+
+//         if (!userData) {
+//             return res.status(401).json({ message: 'Email not found' });
+//         }
+
+//         const data={
+//             user:{
+//                 id:userData.id
+//             }
+//         }
+
+//         const authToken= jwt.sign(data, jwtsecret); //Note , here we can use expire time as 3rd paramter , but here havenot used , this will exist until , user dnt clear his cache
+//         // Compare the provided password with the hashed password(comes in userdata from database) in the database
+//         const passCompare= await bcrypt.compare(req.body.password, userData.password)  
+//         if (!passCompare) {
+//             return res.status(401).json({ message: 'Invalid password' });
+//         }
+//         else {
+//             return res.status(200).json({ message: 'Login successful', authToken }); 
+//         }
+      
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).json({ Servererror:error });
+//     }
+// });
 router.post('/loginuser', async (req, res) => {
     try {
-        // Validate email and password inputs (using express-validator)
-
-        // Check if the user with the provided email exists in the database
-        const userData = await User.findOne({ email: req.body.email });
-
-        if (!userData) {
-            return res.status(401).json({ message: 'Email not found' });
-        }
-
-        const data={
-            user:{
-                id:userData.id
-            }
-        }
-
-        const authToken= jwt.sign(data, jwtsecret); //Note , here we can use expire time as 3rd paramter , but here havenot used , this will exist until , user dnt clear his cache
-        // Compare the provided password with the hashed password(comes in userdata from database) in the database
-        const passCompare= await bcrypt.compare(req.body.password, userData.password)  
-        if (!passCompare) {
-            return res.status(401).json({ message: 'Invalid password' });
-        }
-        else {
-            return res.status(200).json({ message: 'Login successful', authToken }); 
-        }
-      
+      // Check if the user with the provided email exists in the database
+      const userData = await User.findOne({ email: req.body.email });
+  
+      if (!userData) {
+        return res.status(401).json({ message: 'Email not found' });
+      }
+  
+      // Compare the provided password with the hashed password from the database
+      const passwordMatch = await bcrypt.compare(req.body.password, userData.password);
+        //console.log(passwordMatch);
+      if (!passwordMatch) {
+        return res.status(401).json({ message: 'Invalid password' });
+      }
+  
+      // If email and password are valid, create a JWT token
+      const data = {
+        user: {
+          id: userData.id,
+        },
+      };
+  
+      // Sign the JWT token with a secret key
+      const authToken = jwt.sign(data, jwtsecret);
+  
+      // Respond with a success message and the token
+      return res.status(200).json({ message: 'Login successful', authToken });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({ Servererror:error });
+      console.error(error);
+      return res.status(500).json({ Servererror: error.message }); // Use error.message to include the specific error message
     }
-});
+  });
+  
 
 module.exports = router;
