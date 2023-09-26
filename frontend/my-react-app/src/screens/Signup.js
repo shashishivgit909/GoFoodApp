@@ -59,20 +59,21 @@
 // }
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate} from 'react-router-dom';
 
 export default function Signup() {
+    const navigate=useNavigate();
     const [credentials, setCredentials] = useState({
         name: '',
         email: '',
         password: '',
         geolocation: '',
     });
-
+   
     const formHandle = async (e) => {
         e.preventDefault(); // Prevent page from refreshing when the form is submitted
         try {
-            const response = await fetch('http://localhost:5000/api/createuser', {
+            const response = await fetch('http://localhost:5000/api/signup', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -87,12 +88,16 @@ export default function Signup() {
 
             if (response.status===201) {
                 // Successful response handling
-                console.log('User signed up successfully');
+               // console.log('User signed up successfully');
                 // You can redirect or show a success message here
                 // For example, you can use history.push('/') to redirect to the homepage
+                const json = await response.json()
+                console.log(json);
+                localStorage.setItem('token', json.authToken)
+                navigate("/login")
             } else {
                 // Handle error response
-                console.log('Failed to create user');
+                console.log('enter valida credentials for user creation');
             }
         } catch (error) {
             console.log('server error', error);
@@ -158,7 +163,7 @@ export default function Signup() {
                         name="password"
                     />
                 </div>
-                <button type="submit" className="m-3 btn btn-success">
+                <button type="submit" className="m-3 btn btn-success" >
                     Submit
                 </button>
                 <Link to="/login" className="m-3 btn btn-danger">

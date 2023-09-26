@@ -49,7 +49,7 @@ const router = express.Router(); // we can use app=express()
 router.use(express.json());
 
 router.post(
-    '/createuser',
+    '/signup',
     [
         body('name').isLength({ min: 5 }),
         body('password', 'Invalid password').isLength({ min: 5 }),

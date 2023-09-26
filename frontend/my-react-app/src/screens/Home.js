@@ -98,7 +98,7 @@ function Homepage() {
                         <div key={filterItems.id} className='col-12 col-md-6 col-lg-3'>
                           {console.log(filterItems.url)}
                           {/* here sending dataa from home js to card as props to render in card */}
-                          <Card foodName={filterItems.name} item={filterItems} options={filterItems.options[0]} ImgSrc={filterItems.img} ></Card>
+                          <Card foodName={filterItems.name} item={filterItems} options={filterItems.options[0]} ImgSrc={filterItems.img} desc={filterItems.description}></Card>
                         </div>
                       )
                     }) : <div> No Such Data </div>}
