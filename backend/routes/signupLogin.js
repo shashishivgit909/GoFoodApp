@@ -1,40 +1,4 @@
-// import express from "express";
-// import User from "../models/User.mjs";
-// import { body, validationResult } from "express-validator";
 
-// const router = express.Router();
-
-// // Add express.json() middleware to parse JSON data from the request body
-// router.use(express.json());
-
-// //Adv: to use validation as middleware is that if any input data donot meet validation then API will not work and  so below data will not be stored
-// router.post("/createuser",  //here validation is applied as middleware to API in []: 
-//     [
-//         body('name').isLength({ min: 5 }),
-//         body('password',"invalid password").isLength({ min: 5 }),
-//         body('email').isEmail()
-//     ],
-//     async (req, res) => {
-//         const errors = validationResult(req);
-//         if (!errors.isEmpty()) {
-//             return res.status(400).json({ errors: errors.array() }); // Use res.status to set the response status code
-//         }
-//         console.log("insode async")
-//         try {
-//             //console.log("inside try")
-//             await User.create({
-//                 name: req.body.name,
-//                 email: req.body.email,
-//                 location: req.body.location,
-//                 password: req.body.password
-//             });
-//         // console.log("below creation")
-//             res.status(202).json({ success: true }); // Use res.status to set the response status code
-//         } catch (error) {
-//             console.error(error);
-//             res.status(500).json({ success: false, error: "Server error" }); // Use res.status to set the response status code
-//         }
-//     });
 
 // export default router;
 const express = require('express'); //express is biulin module so just give its name in require ,not path
@@ -81,39 +45,7 @@ router.post(
     }
 );
 
-// Endpoint or API for login
-// router.post('/loginuser', async (req, res) => {
-//     try {
-//         // Validate email and password inputs (using express-validator)
 
-//         // Check if the user with the provided email exists in the database
-//         const userData = await User.findOne({ email: req.body.email });
-
-//         if (!userData) {
-//             return res.status(401).json({ message: 'Email not found' });
-//         }
-
-//         const data={
-//             user:{
-//                 id:userData.id
-//             }
-//         }
-
-//         const authToken= jwt.sign(data, jwtsecret); //Note , here we can use expire time as 3rd paramter , but here havenot used , this will exist until , user dnt clear his cache
-//         // Compare the provided password with the hashed password(comes in userdata from database) in the database
-//         const passCompare= await bcrypt.compare(req.body.password, userData.password)  
-//         if (!passCompare) {
-//             return res.status(401).json({ message: 'Invalid password' });
-//         }
-//         else {
-//             return res.status(200).json({ message: 'Login successful', authToken }); 
-//         }
-      
-//     } catch (error) {
-//         console.error(error);
-//         return res.status(500).json({ Servererror:error });
-//     }
-// });
 router.post('/loginuser', async (req, res) => {
     try {
       // Check if the user with the provided email exists in the database
