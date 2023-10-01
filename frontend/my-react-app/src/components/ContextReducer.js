@@ -37,26 +37,19 @@ const CartDispatchContext = createContext();
 const reducer = (state, action) => {
     switch (action.type) {
         case "ADD":
-            return [...state, { id: action.id, name: action.name, qty: action.qty, size: action.size, price: action.price, img: action.img }]
-        case "REMOVE":
-            let newArr = [...state]
-            newArr.splice(action.index, 1)
-            return newArr;
-        case "DROP":
-            let empArray = []
-            return empArray
-        case "UPDATE":
-            let arr = [...state]
-            arr.find((food, index) => {
-                if (food.id === action.id) {
-                    console.log(food.qty, parseInt(action.qty), action.price + food.price)
-                    arr[index] = { ...food, qty: parseInt(action.qty) + food.qty, price: action.price + food.price }
-                }
-                return arr
-            })
-            return arr
+            return [...state, {
+                id: action.id,
+                name: action.name,
+                qty: action.qty,
+                size: action.size,
+                price: action.price,
+                img: action.img
+            }];
+        // You can add other cases for removing, updating, or any other cart-related actions.
+
         default:
             console.log("Error in Reducer");
+            return state; // Make sure to return the state in the default case.
     }
 };
 
@@ -74,3 +67,22 @@ export const CartProvider = ({ children }) => {
 
 export const useCart = () => useContext(CartStateContext);
 export const useDispatchCart = () => useContext(CartDispatchContext);
+
+
+ // case "REMOVE":
+        //     let newArr = [...state]
+        //     newArr.splice(action.index, 1)
+        //     return newArr;
+        // case "DROP":
+        //     let empArray = []
+        //     return empArray
+        // case "UPDATE":
+        //     let arr = [...state]
+        //     arr.find((food, index) => {
+        //         if (food.id === action.id) {
+        //             console.log(food.qty, parseInt(action.qty), action.price + food.price)
+        //             arr[index] = { ...food, qty: parseInt(action.qty) + food.qty, price: action.price + food.price }
+        //         }
+        //         return arr
+        //     })
+        //     return arr

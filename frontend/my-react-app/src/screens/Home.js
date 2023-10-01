@@ -7,7 +7,7 @@ function Homepage() {
   const [foodCat, setfoodCat] = useState([]);
   const [foodItems, setfoodItems] = useState([]);
   const [search, setsearch] = useState("");
-
+ console.log("food item>>",foodItems);
   const loadData = async () => {
     let response;
     try {
